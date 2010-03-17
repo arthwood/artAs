@@ -14,14 +14,21 @@
 		protected var _handleCoef:Number = 0.4;
 		
 		public function SimpleScroll() {
+			handle.addEventListener(Event.CHANGE, onDragging);
 			track.visible = false;
+			updateHandleBounds();
+		}
+		
+		override protected function draw():void {
+			super.draw();
+			
 			updateHandleBounds();
 		}
 		
 		protected function updateHandleBounds():void {
 		}
 		
-		public function onDragging():void {
+		public function onDragging(e_:Event):void {
 			var vBottom:Number = getBottom();
 			var vValue:Number = (getHandleStart() - vBottom)/(getTop() - vBottom);
 			
@@ -54,7 +61,7 @@
 			return 0;
 		}
 		
-		protected function getMouseValue():Number {
+		public function getMouseValue():Number {
 			var vBottom:Number = getBottom();
 			
 			return MathUtils.getLimitedValue((getMousePosition() - vBottom)/(getTop() - vBottom), 0, 1);
@@ -84,11 +91,11 @@
 			return handle.dragging;
 		}
 		
-		override public function getMinWidth():Number {
+		override public function getWidth():Number {
 			return background.width;
 		}
 		
-		override public function getMinHeight():Number {
+		override public function getHeight():Number {
 			return background.height;
 		}
 		

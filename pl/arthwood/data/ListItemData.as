@@ -18,7 +18,11 @@
 		}
 		
 		public function createItem():ListItem {
-			return new SelectableListItem(this);
+			var sli:ListItem = new SelectableListItem();
+			
+			sli.item = this;
+			
+			return sli;
 		}
 		
 		public function get label():String {

@@ -18,8 +18,6 @@
 		public var maskClip:MovieClip;
 		public var background:MovieClip;
 		
-		private var _scrollsOutside:Boolean = true;
-		
 		public function ScrolledList() {
 			vScroll.addEventListener(Event.CHANGE, onVScroll);
 			hScroll.addEventListener(Event.CHANGE, onHScroll);
@@ -29,6 +27,19 @@
 			list.addEventListener(ListEvent.CONTENT_CHANGE, onContentChange);
 			list.addEventListener(ListEvent.ITEM_SIZE, onItemSize);
 			list.addEventListener(ListEvent.ITEM_OVER, onItemOver);
+		}
+		
+		override protected function draw():void {
+			super.draw();
+			
+			list.setSize(_width, _height);
+			vScroll.setSize(_width - vScroll.getWidth(), _height);
+			hScroll.setSize(_width, _height - vScroll.getHeight());
+			maskClip.width = _width;
+			maskClip.height = _height;
+			background.width = _width;
+			background.height = _height;
+			
 			updateScrolls();
 		}
 		
@@ -189,11 +200,11 @@
 		}
 		
 		public function get minScrollWidth():Number {
-			return hScroll.getMinWidth();
+			return hScroll.getWidth();
 		}
 		
 		public function get minScrollHeight():Number {
-			return vScroll.getMinHeight();
+			return vScroll.getHeight();
 		}
 		
 		public function get isFirstSelected():Boolean {
@@ -210,10 +221,6 @@
 		
 		public function set hScrollVisibility(v_:Boolean):void {
 			hScroll.visible = v_;
-		}
-		
-		public function set scrollsOutside(v_:Boolean):void {
-			_scrollsOutside = v_;
 		}
 		
 		public function get itemOver():IListItem {

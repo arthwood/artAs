@@ -9,24 +9,41 @@
 	import pl.arthwood.events.ListEvent;
 	
 	public class ListItem extends Widget {
-		public var item:IListItem;
 		public var btnBkg:SimpleButton;
 		public var tfLabel:TextField;
 		
+		protected var _item:IListItem;
 		protected var _active:Boolean = true;
 		protected var _selected:Boolean = false;
 		
-		public function ListItem(item_:IListItem) {
-			super();
-			
-			item = item_;
-			item.addEventListener(Event.CHANGE, onItemChange);
+		public function ListItem() {
 			tfLabel.mouseEnabled = false;
 			btnBkg.addEventListener(MouseEvent.CLICK, onClick);
 			btnBkg.addEventListener(MouseEvent.MOUSE_OVER, onOver);
 			selected = false;
-			setupLabel();
+		}
+		
+		public function get item():IListItem {
+			return _item;
+		}
+		
+		public function set item(item_:IListItem):void {
+			if (_item) {
+				_item.removeEventListener(Event.CHANGE, onItemChange);
+			}
+			
+			_item = item_;
+			_item.addEventListener(Event.CHANGE, onItemChange);
 			setText(item.label);
+		}
+		
+		override protected function draw():void {
+			super.draw();
+			
+			btnBkg.width = _width;
+			btnBkg.height = _height;
+			tfLabel.width = _width - tfLabel.x - 2;
+			tfLabel.height = _height - tfLabel.y - 2;
 		}
 		
 		public function set active(v_:Boolean):void {
@@ -116,8 +133,8 @@
 		override public function setWidth(v_:Number):void {
 			super.setWidth(v_);
 			
-			btnBkg.width = __width;
-			tfLabel.width = __width - tfLabel.x - 2;
+			btnBkg.width = _width;
+			tfLabel.width = _width - tfLabel.x - 2;
 			
 			updateParentCell();
 		}
@@ -125,7 +142,7 @@
 		override public function setHeight(v_:Number):void {
 			super.setHeight(v_);
 			
-			btnBkg.height = __height;
+			btnBkg.height = _height;
 			
 			updateParentCell();
 		}

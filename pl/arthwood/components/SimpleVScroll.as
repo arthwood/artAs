@@ -19,7 +19,7 @@ package pl.arthwood.components {
 		}
 		
 		override protected function getHandleLength():Number {
-			return handle.height;
+			return handle.getHeight();
 		}
 		
 		override protected function getTrackLength():Number {
@@ -32,6 +32,14 @@ package pl.arthwood.components {
 		
 		override protected function getMousePosition():Number {
 			return mouseY;
+		}
+		
+		override protected function draw():void {
+			background.height = _height;
+			track.height = _height;
+			handle.setHeight(_height * _handleCoef);
+			
+			super.draw();
 		}
 	}
 }

@@ -1,13 +1,8 @@
-package pl.arthwood.components {
-	import pl.arthwood.components.Scroll;
-	
+﻿package pl.arthwood.components {
 	public class VScroll extends Scroll {
-		override public function getMinWidth():Number {
-			return simpleScroll.getMinWidth();
-		}
-		
-		override public function getMinHeight():Number {
-			return simpleScroll.getMinHeight() + btnArrowDown.height + btnArrowUp.height;
+		override protected function draw():void {
+			simpleScroll.setHeight(_height - btnDown.height - btnUp.height);
+			btnUp.y = simpleScroll.y + simpleScroll.getHeight();
 		}
 	}
 }

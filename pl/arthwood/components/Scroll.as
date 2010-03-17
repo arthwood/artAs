@@ -9,8 +9,8 @@
 	
 	public class Scroll extends Component {
 		public var simpleScroll:SimpleScroll;
-		public var btnArrowDown:SimpleButton;
-		public var btnArrowUp:SimpleButton;
+		public var btnDown:SimpleButton;
+		public var btnUp:SimpleButton;
 		
 		private var _step:Number = 0.02;
 		private var _stepUpTimer:Timer;
@@ -22,9 +22,9 @@
 			_stepDownTimer = new Timer(100);
 			_stepDownTimer.addEventListener(TimerEvent.TIMER, onStepDown);
 			
-			btnArrowDown.addEventListener(MouseEvent.MOUSE_DOWN, onArrowDownMouseDown);
-			btnArrowUp.addEventListener(MouseEvent.MOUSE_DOWN, onArrowUpMouseDown);
-			btnArrowUp.useHandCursor = btnArrowDown.useHandCursor = false;
+			btnDown.addEventListener(MouseEvent.MOUSE_DOWN, onArrowDownMouseDown);
+			btnUp.addEventListener(MouseEvent.MOUSE_DOWN, onArrowUpMouseDown);
+			btnUp.useHandCursor = btnDown.useHandCursor = false;
 			simpleScroll.addEventListener(Event.CHANGE, onChange);
 			simpleScroll.background.addEventListener(MouseEvent.MOUSE_DOWN, onSimpleScrollBackgroundMouseDown);
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);

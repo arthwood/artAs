@@ -8,15 +8,30 @@
 	* @author Artur Bilski
 	*/
 	public class Component extends MovieClip {
-		protected var __width:Number;
-		protected var __height:Number;
+		protected var _width:Number;
+		protected var _height:Number;
 		protected var _disabled:Boolean = false;
 		
 		public function Component() {
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+			
+			_width = width;
+			_height = height;
+			
+			scaleX = 1;
+			scaleY = 1;
+			
+			draw();
 		}
 		
-		public function initialize():void {
+		public function setSize(w:Number, h:Number):void {
+			_width = w;
+			_height = h;
+			
+			draw();
+		}
+		
+		protected function draw():void {
 		}
 		
 		private function onRemovedFromStage(e_:Event):void {
@@ -39,19 +54,11 @@
 		}
 		
 		public function setWidth(v_:Number):void {
-			__width = v_;
+			setSize(v_, _height);
 		}
 		
 		public function setHeight(v_:Number):void {
-			__height = v_;
-		}
-		
-		public function getMinWidth():Number {
-			return getWidth();
-		}
-		
-		public function getMinHeight():Number {
-			return getHeight();
+			setSize(_width, v_);
 		}
 		
 		public function setPosition(p_:Point):void {

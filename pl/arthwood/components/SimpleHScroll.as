@@ -19,7 +19,7 @@
 		}
 		
 		override protected function getHandleLength():Number {
-			return handle.width;
+			return handle.getWidth();
 		}
 		
 		override protected function getTrackLength():Number {
@@ -32,6 +32,14 @@
 		
 		override protected function getMousePosition():Number {
 			return mouseX;
+		}
+		
+		override protected function draw():void {
+			background.width = _width;
+			track.width = _width;
+			handle.setWidth(_width * _handleCoef);
+			
+			super.draw();
 		}
 	}
 }

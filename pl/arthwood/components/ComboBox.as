@@ -12,10 +12,17 @@
 		private var _expanded:Boolean = false;
 		
 		public function ComboBox() {
+			header.comboBox = this;
 			list.hScrollVisibility = false;
-			list.scrollsOutside = false;
 			list.visible = _expanded;
 			list.addEventListener(Event.CHANGE, onListChange);
+		}
+		
+		override protected function draw():void {
+			super.draw();
+			
+			header.setWidth(_width);
+			list.setSize(_width, _height - header.getHeight());
 		}
 		
 		public function addItem(item_:IListItem):void {

@@ -27,10 +27,20 @@
 		private var _itemOver:IListItem;
 		
 		public function SimpleList() {
-			_cell = new Cell(Cell.VERTICAL);
-			_cell.addEventListener(Event.CHANGE, onCellChange);
 			addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			_cell = new Cell(Cell.VERTICAL);
+			_cell.addEventListener(Event.CHANGE, onCellChange);
+			
+			super();
+		}
+		
+		override protected function draw():void {
+			super.draw();
+			
+			for each (var i:ListItem in getAllUIItems()) {
+				i.setSize(_width, _height);
+			}
 		}
 		
 		override public function dispose():void {
@@ -216,7 +226,7 @@
 		override public function setHeight(v_:Number):void {
 			super.setHeight(v_);
 			
-			_cell.height = __height;
+			_cell.height = _height;
 		}
 		
 		override public function getHeight():Number {
@@ -226,7 +236,7 @@
 		override public function setWidth(v_:Number):void {
 			super.setWidth(v_);
 			
-			_cell.width = __width;
+			_cell.width = _width;
 		}
 		
 		override public function getWidth():Number {

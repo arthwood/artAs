@@ -1,5 +1,6 @@
 ﻿package pl.arthwood.components.comboBoxClasses {
 	import flash.display.SimpleButton;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import pl.arthwood.components.ComboBox;
@@ -10,19 +11,24 @@
 		public var btnCollapse:SimpleButton;
 		public var btnBkg:SimpleButton;
 		public var tfLabel:TextField;
-		
-		private var _comboBox:ComboBox;
+		public var comboBox:ComboBox;
 		
 		public function ComboBoxHeader() {
-			_comboBox = ComboBox(parent);
 			btnExpand.mouseEnabled = false;
 			btnCollapse.mouseEnabled = false;
 			tfLabel.mouseEnabled = false;
 			btnBkg.addEventListener(MouseEvent.CLICK, onBkg);
 		}
 		
+		override protected function draw():void {
+			btnBkg.width = _width;
+			btnCollapse.x = _width - btnCollapse.width;
+			btnExpand.x = _width - btnExpand.width;
+			tfLabel.width = btnExpand.x - 2;
+		}
+		
 		public function onBkg(e_:MouseEvent):void {
-			_comboBox.onHeader();
+			comboBox.onHeader();
 		}
 
 		public function setExpanded(expanded_:Boolean):void {

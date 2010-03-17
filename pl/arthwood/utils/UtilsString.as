@@ -2,6 +2,10 @@
 	import pl.arthwood.utils.UtilsArray;
 	
 	public class UtilsString {
+		public static function lastChar(str_:String):String {
+			return str_.substr(str_.length - 1, 1);
+		}
+		
 		public static function capitalize(str_:String):String {
 			return str_.split(' ').map(capitalizeCallback).join();
 		}

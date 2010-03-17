@@ -14,7 +14,7 @@
 			_scroll.addEventListener(Event.CHANGE, onChange);
 			
 			_mask = new Sprite();
-			_mask.graphics.beginFill(0xaaaaaa, 0.5);
+			_mask.graphics.beginFill(0, 1);
 			_mask.graphics.drawRect(0, 0, 100, 100);
 			
 			_content = content_;
