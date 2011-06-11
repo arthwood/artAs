@@ -6,7 +6,7 @@
 	* @author Artur Bilski
 	*/
 	public class Screen extends Component implements IScreen {
-		private var _visible:Boolean = true;
+		protected var _visible:Boolean = true;
 		
 		public function Screen() {
 		}
