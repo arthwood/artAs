@@ -16,6 +16,17 @@
 		
 		public function Component() {
 			init();
+			
+			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+		}
+		
+		private function onAddedToStage(e:Event):void {
+			removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+			
+			added();
+		}
+		
+		protected function added():void {
 		}
 		
 		protected function init():void {
