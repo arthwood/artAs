@@ -6,12 +6,10 @@ package com.arthwood.managers {
 	
 	public class ScreenManager extends EventDispatcher {
 		private var _screens:List;
-
-		public function ScreenManager(screens_:Array, loop_:Boolean = false, reset_:Boolean = false) {
+		
+		public function ScreenManager(screens_:Array, loop_:Boolean = false) {
 			_screens = new List(screens_);
 			loop = Boolean(loop_);
-			
-			if (reset_) reset();
 		}
 		
 		public function addScreen(screen_:IScreen):void {
@@ -50,13 +48,6 @@ package com.arthwood.managers {
 			i_.setHiddenState();
 		}
 		
-		public function reset():void {
-			_screens.reset();
-
-			setAllToHiddenState();
-			currentScreen.setShowedState();
-		}
-		
 		public function showPrev():void {
 			setScreen(IScreen(_screens.getPrev()));
 		}
@@ -65,16 +56,21 @@ package com.arthwood.managers {
 			setScreen(IScreen(_screens.getNext()));
 		}
 		
-		public function setScreenAt(i_:Number):void {
+		public function setScreenAt(i_:uint):void {
 			setScreen(IScreen(_screens.getItemAt(i_)));
 		}
 		
 		public function setScreen(screen_:IScreen):void {
 			if (currentScreen) currentScreen.hide();
 			
-			_screens.setItem(screen_);
-			
-			currentScreen.show();
+			if (screen_) {
+				_screens.setItem(screen_);
+				
+				currentScreen.show();
+			}
+			else {
+				_screens.reset();
+			}
 			
 			dispatchEvent(new Event(Event.CHANGE));
 		}
@@ -83,7 +79,7 @@ package com.arthwood.managers {
 			return IScreen(_screens.getCurrent());
 		}
 		
-		public function get currentScreenNum():Number {
+		public function get currentIndex():int {
 			return _screens.getPointer();
 		}
 		
@@ -91,7 +87,7 @@ package com.arthwood.managers {
 			return _screens.items;
 		}
 		
-		public function get screensNum():Number {
+		public function get screensNum():uint {
 			return _screens.length;
 		}
 		
@@ -101,6 +97,14 @@ package com.arthwood.managers {
 		
 		public function set loop(loop_:Boolean):void {
 			_screens.loop = loop_;
+		}
+		
+		public function get isFirst():Boolean {
+			return _screens.isFirst;
+		}
+		
+		public function get isLast():Boolean {
+			return _screens.isLast;
 		}
 	}
 }
