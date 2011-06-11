@@ -7,10 +7,9 @@
 	* @author Artur Bilski
 	*/
 	public class SimpleScreen extends Screen {
-		private var _owner:DisplayObjectContainer;
+		protected var _owner:DisplayObjectContainer;
 		
 		public function SimpleScreen(owner_:DisplayObjectContainer) {
-			super();
 			_owner = owner_;
 		}
 		
