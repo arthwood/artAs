@@ -52,7 +52,7 @@
 		}
 		
 		public static function enabled(btn:SimpleButton, value:Boolean, alpha:Number = 0.2):void {
-			btn.mouseEnabled = value;
+			btn.enabled = btn.mouseEnabled = value;
 			btn.alpha = value ? 1 : alpha;
 		}
 	}
