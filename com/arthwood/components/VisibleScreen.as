@@ -6,17 +6,14 @@
 	* ...
 	* @author Artur Bilski
 	*/
-	public class SimpleScreen extends Screen {
-		protected var _owner:DisplayObjectContainer;
-		
-		public function SimpleScreen(owner_:DisplayObjectContainer) {
-			_owner = owner_;
+	public class VisibleScreen extends Screen {
+		public function VisibleScreen() {
 		}
 		
 		override protected function update():void {
 			super.update();
 			
-			_visible ? _owner.addChild(this) : _owner.removeChild(this);
+			visible = _visible;
 		}
 	}
 }

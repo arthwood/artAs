@@ -9,7 +9,6 @@
 	* @author Artur Bilski
 	*/
 	public class UtilsDO {
-		
 		public static function rescaleToWidth(do_:DisplayObject, w_:Number):void {
 			var vRatio:Number = do_.width/do_.height;
 			
@@ -36,9 +35,17 @@
 			}
 		}
 		
+		public static function setScale(do_:DisplayObject, v_:Number):void {
+			do_.scaleX = do_.scaleY = v_;
+		}
+		
 		public static function setPosition(do_:DisplayObject, x_:Number, y_:Number):void {
 			do_.x = x_;
 			do_.y = y_;
+		}
+		
+		public static function getPosition(do_:DisplayObject):Point {
+			return new Point(do_.x, do_.y);
 		}
 		
 		public static function setPositionAtPoint(do_:DisplayObject, p_:Point):void {

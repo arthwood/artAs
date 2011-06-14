@@ -21,14 +21,21 @@
 		
 		public function setShowedState():void {
 			_visible = true;
+			
+			update();
 		}
 		
 		public function setHiddenState():void {
 			_visible = false;
+			
+			update();
 		}
 		
 		public function isShowed():Boolean {
 			return _visible;
+		}
+		
+		protected function update():void {
 		}
 	}
 }
