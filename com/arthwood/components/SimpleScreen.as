@@ -18,5 +18,9 @@
 			
 			_visible ? _owner.addChild(this) : _owner.removeChild(this);
 		}
+		
+		public function get owner():DisplayObjectContainer {
+			return _owner;
+		}
 	}
 }

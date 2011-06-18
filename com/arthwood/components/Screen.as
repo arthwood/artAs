@@ -1,11 +1,12 @@
 ﻿package com.arthwood.components {
 	import com.arthwood.components.screenClasses.IScreen;
+	import flash.display.MovieClip;
 	
 	/**
 	* ...
 	* @author Artur Bilski
 	*/
-	public class Screen extends Component implements IScreen {
+	public class Screen extends MovieClip implements IScreen {
 		protected var _visible:Boolean = true;
 		
 		public function Screen() {

@@ -7,9 +7,6 @@
 	* @author Artur Bilski
 	*/
 	public class VisibleScreen extends Screen {
-		public function VisibleScreen() {
-		}
-		
 		override protected function update():void {
 			super.update();
 			
