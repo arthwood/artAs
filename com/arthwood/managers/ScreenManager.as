@@ -87,7 +87,7 @@ package com.arthwood.managers {
 			return _screens.items;
 		}
 		
-		public function get screensNum():uint {
+		public function get length():uint {
 			return _screens.length;
 		}
 		

@@ -23,7 +23,7 @@
 			return Math.min(Math.max(v_, min_), max_);
 		}
 		
-		public static function pointAtTheEdgeOfTheRectangle(p_:Point, rect_:Rectangle):Point {
+		public static function getPointAtTheEdge(p_:Point, rect_:Rectangle):Point {
 			return new Point(getLimitedValue(p_.x, rect_.left, rect_.right), getLimitedValue(p_.y, rect_.top, rect_.bottom));
 		}
 		

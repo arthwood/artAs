@@ -31,5 +31,9 @@
 		public static function detect(arr:Array, block:Function):Object {
 			return arr.filter(block)[0];
 		}
+		
+		public static function empty(arr:Array):Boolean {
+			return arr.length == 0;
+		}
 	}
 }

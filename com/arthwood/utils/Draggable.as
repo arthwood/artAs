@@ -1,6 +1,7 @@
 package com.arthwood.utils {
-	import flash.display.InteractiveObject;
-	import flash.display.Sprite;
+	import com.arthwood.events.DragEvent;
+	import flash.display.DisplayObject;
+	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
@@ -9,70 +10,79 @@ package com.arthwood.utils {
 	import com.arthwood.math.MathUtils;
 
 	public class Draggable extends EventDispatcher {
-		public static const BEGIN:String = 'begin';
-		public static const END:String = 'end';
-		public static const DRAGGING:String = 'dragging';
-		
 		public var bounds:Rectangle;
 		
-		private var _draggableElement:Sprite;
-		private var _activeElement:InteractiveObject;
+		private var _element:DisplayObject;
 		private var _shift:Point;
-		private var _isBeingDragged:Boolean = false;
+		private var _dragging:Boolean = false;
+		private var _active:Boolean = false;
 		
-		public function Draggable(draggableElement_:Sprite, activeElement_:InteractiveObject) {
-			_draggableElement = draggableElement_;
-			_activeElement = activeElement_;
+		public function Draggable(element_:DisplayObject) {
+			_element = element_;
 			_shift = new Point(0, 0);
-			_activeElement.addEventListener(MouseEvent.MOUSE_DOWN, beginDrag);
+			active = true;
 		}
 		
 		public function dispose():void {
-			_activeElement.removeEventListener(MouseEvent.MOUSE_DOWN, beginDrag);
-			_activeElement.stage.removeEventListener(MouseEvent.MOUSE_MOVE, onDragging);
-			_activeElement.stage.removeEventListener(MouseEvent.MOUSE_UP, endDrag);
+			active = false;
+			_element.removeEventListener(Event.ENTER_FRAME, onDragging);
+			_element.stage.removeEventListener(MouseEvent.MOUSE_UP, endDrag);
 		}
 		
-		private function beginDrag(e_:Event):void {
-			_shift.x = _draggableElement.mouseX;
-			_shift.y = _draggableElement.mouseY;
-			_activeElement.stage.addEventListener(MouseEvent.MOUSE_MOVE, onDragging);
-			_activeElement.stage.addEventListener(MouseEvent.MOUSE_UP, endDrag);
-			_isBeingDragged = true;
-			dispatchEvent(new Event(BEGIN));
+		private function beginDrag(e_:MouseEvent):void {
+			_shift.x = _element.mouseX;
+			_shift.y = _element.mouseY;
+			_element.addEventListener(Event.ENTER_FRAME, onDragging);
+			_element.stage.addEventListener(MouseEvent.MOUSE_UP, endDrag);
+			_dragging = true;
+			dispatchEvent(new DragEvent(DragEvent.BEGIN));
 		}
 		
 		private function endDrag(e_:Event):void {
-			_activeElement.stage.removeEventListener(MouseEvent.MOUSE_MOVE, onDragging);
-			_activeElement.stage.removeEventListener(MouseEvent.MOUSE_UP, endDrag);
-			_isBeingDragged = false;
-			dispatchEvent(new Event(END));
+			_element.removeEventListener(Event.ENTER_FRAME, onDragging);
+			_element.stage.removeEventListener(MouseEvent.MOUSE_UP, endDrag);
+			_dragging = false;
+			dispatchEvent(new DragEvent(DragEvent.END));
 		}
 		
-		private function onDragging(e_:MouseEvent):void {
-			e_.updateAfterEvent();
-			
+		private function onDragging(e_:Event):void {
 			updatePosition();
-			
-			dispatchEvent(new Event(DRAGGING));
+			dispatchEvent(new DragEvent(DragEvent.DRAG));
 		}
 		
 		private function updatePosition():void {
-			var vPoint:Point = (new Point(_draggableElement.parent.mouseX, _draggableElement.parent.mouseY)).subtract(_shift);
+			var point:Point = (new Point(_element.parent.mouseX, _element.parent.mouseY)).subtract(_shift);
 			
-			vPoint.x = int(vPoint.x);
-			vPoint.y = int(vPoint.y);
+			point.x = int(point.x);
+			point.y = int(point.y);
 			
-			if (bounds && !bounds.containsPoint(vPoint)) {
-				vPoint = MathUtils.pointAtTheEdgeOfTheRectangle(vPoint, bounds);
+			if (bounds && !bounds.containsPoint(point)) {
+				point = MathUtils.getPointAtTheEdge(point, bounds);
 			}
 			
-			_draggableElement.x = vPoint.x;
-			_draggableElement.y = vPoint.y;
+			_element.x = point.x;
+			_element.y = point.y;
 		}
 		
-		public function get isBeingDragged():Boolean {
-			return _isBeingDragged;
+		public function get dragging():Boolean {
+			return _dragging;
+		}
+		
+		public function get element():DisplayObject {
+			return _element;
+		}
+		
+		public function set active(v:Boolean):void {
+			if (_active != v) {
+				_active = v;
+				
+				if (_active) {
+					_element.addEventListener(MouseEvent.MOUSE_DOWN, beginDrag) 
+				}
+				else {
+					_element.removeEventListener(MouseEvent.MOUSE_DOWN, beginDrag);
+				}
+			}
 		}
 	}
 }
